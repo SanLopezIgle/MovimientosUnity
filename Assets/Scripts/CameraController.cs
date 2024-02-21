@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // Reference to the player GameObject.
+    // Referencia al GameObject del jugador.
     public GameObject player;
 
-    // The distance between the camera and the player.
+    // La distancia entre la cámara y el jugador.
     private Vector3 offset;
 
-    // Start is called before the first frame update.
+    // Start se llama antes de la primera actualización de fotograma.
     void Start()
     {
         // Calcula el desplazamiento incial de la camara desde la posicion del jugador
@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
         */
     }
 
-    // LateUpdate is called once per frame after all Update functions have been completed.
+    // LateUpdate se llama una vez por fotograma después de que se han completado todas las funciones de actualización.
     void LateUpdate()
     {
         // Mueve la cámara a la posición de los ojos del jugador

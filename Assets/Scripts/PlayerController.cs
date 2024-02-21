@@ -7,68 +7,81 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    // Rigidbody of the player.
+    // Rigidbody del jugador
     private Rigidbody rb; 
 
-    // Movement along X and Y axes.
+    // Movimiento a lo largo de los ejes X y Y.
     private float movementX;
     private float movementY;
 
-    // Speed at which the player moves.
+    // Velocidad a la que se mueve el jugador.
     public float speed = 0;
+    
+    // Variable para llevar el seguimiento de los objetos "PickUp" recolectados.
     private int count;
+    
+    // Componente de texto UI para mostrar el contador de objetos "PickUp" recolectados.
     public TextMeshProUGUI countText;
+    
+    // Objeto UI para mostrar el texto de victoria.
     public GameObject winTextObject;
 
-    // Start is called before the first frame update.
+    // Start se llama antes de la primera actualización de fotograma.
     void Start()
     {
-        // Get and store the Rigidbody component attached to the player.
+        // Obtén y almacena el componente Rigidbody adjunto al jugador.
         rb = GetComponent<Rigidbody>();
-        // Cambiar masa del Player
+        // Cambiar masa del jugador
         rb.mass = 2f;
+        
         count = 0;
         SetCountText();
+        // Inicialmente, desactiva el texto de victoria.
         winTextObject.SetActive(false);
     }
  
-    // This function is called when a move input is detected.
+    // Esta función se llama cuando se detecta una entrada de movimiento.
     void OnMove(InputValue movementValue)
     {
-        // Convert the input value into a Vector2 for movement.
+        // Convierte el valor de entrada en un Vector2 para el movimiento.
         Vector2 movementVector = movementValue.Get<Vector2>();
 
-        // Store the X and Y components of the movement.
+        // Almacena los componentes X e Y del movimiento.
         movementX = movementVector.x; 
         movementY = movementVector.y; 
     }
 
-    // FixedUpdate is called once per fixed frame-rate frame.
+    // FixedUpdate se llama una vez por fotograma de velocidad fija.
     private void FixedUpdate() 
     {
-        // Create a 3D movement vector using the X and Y inputs.
+        // Crea un vector de movimiento 3D utilizando las entradas X y Y.
         Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
 
-        // Apply force to the Rigidbody to move the player.
+        // Aplica fuerza al Rigidbody para mover al jugador.
         rb.AddForce(movement * speed); 
     }
 
     void OnTriggerEnter(Collider other)
     {
+        // Verifica si el objeto con el que colisionó el jugador tiene la etiqueta "PickUp".
         if (other.gameObject.CompareTag("PickUp"))
         {
+            // Desactiva el objeto colisionado (haciéndolo desaparecer).
             other.gameObject.SetActive(false);
             count = count + 1;
             SetCountText();
         }
     }
-    // Function to update the displayed count of "PickUp" objects collected.
+    // Función para actualizar el contador de objetos "PickUp" recolectados.
     void SetCountText() 
     {
-        // Update the count text with the current count.
+        // Actualiza el texto del contador con el contador actual.
         countText.text = "Count: " + count.ToString();
+        
+        // Verifica si el contador ha alcanzado o superado la condición de victoria.
         if (count >= 8)
         {
+            // Muestra el texto de victoria.
             winTextObject.SetActive(true);
         }
     }
