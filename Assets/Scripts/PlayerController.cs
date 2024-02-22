@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
         movementY = movementVector.y; 
     }
 
+	
+
     // FixedUpdate se llama una vez por fotograma de velocidad fija.
     private void FixedUpdate() 
     {
@@ -85,4 +87,11 @@ public class PlayerController : MonoBehaviour
             winTextObject.SetActive(true);
         }
     }
+
+	// Método llamado cuando se activa el evento "Fire" configurado en el Input System.
+	void OnFire()
+	{
+		rb.AddForce(Vector3.up * 8.0f, ForceMode.Impulse);
+		Debug.Log("OnFire() llamado");
+	}
 }
